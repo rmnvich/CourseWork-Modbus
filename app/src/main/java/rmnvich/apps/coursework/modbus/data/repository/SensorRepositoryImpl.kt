@@ -4,10 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.usb.UsbDevice.getDeviceName
 import android.hardware.usb.UsbManager
 import com.ftdi.j2xx.D2xxManager
-import com.ftdi.j2xx.FT_Device
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -15,8 +13,6 @@ import io.reactivex.FlowableEmitter
 import rmnvich.apps.coursework.modbus.data.utils.SensorFactory
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
-import java.lang.Exception
-import java.lang.NullPointerException
 
 class SensorRepositoryImpl(
         private val applicationContext: Context,
@@ -24,36 +20,18 @@ class SensorRepositoryImpl(
         private val deviceManager: D2xxManager
 ) : SensorRepository {
 
-    /*
-    private var device: FT_Device? = null
+    private val intentFilter = IntentFilter()
 
-    private fun configureDevice() {
-        if (deviceManager.createDeviceInfoList(applicationContext) > 0) {
-            device = deviceManager.openByIndex(applicationContext, 0)
-            device?.setBitMode(0.toByte(), D2xxManager.FT_BITMODE_RESET)
-            device?.setBaudRate(9600)
-            device?.setDataCharacteristics(
-                    D2xxManager.FT_DATA_BITS_8,
-                    D2xxManager.FT_STOP_BITS_1,
-                    D2xxManager.FT_PARITY_NONE
-            )
-            device?.latencyTimer = 5.toByte()
-            device?.setRts()
-            device?.clrDtr()
-            device?.setFlowControl(D2xxManager.FT_FLOW_NONE, 0x11, 0x13)
-        }
+    init {
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
     }
-    */
 
     override fun searchSensor(): Flowable<Sensor> {
         return Flowable.create({ emitter ->
             getDeviceInfo(emitter)
-
-            val intentFilter = IntentFilter()
-            intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
-            intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
             applicationContext.registerReceiver(object : BroadcastReceiver() {
-                override fun onReceive(p0: Context?, p1: Intent?) {
+                override fun onReceive(context: Context?, intent: Intent?) {
                     getDeviceInfo(emitter)
                 }
             }, intentFilter)
@@ -68,6 +46,7 @@ class SensorRepositoryImpl(
             val device = deviceList[0]
 
             val sensorWithRegisters = sensorFactory.createSensorBySerialNumber(device?.serialNumber!!)
+            //TODO: Get sensor readings
 
             val sensorWithInfo = Sensor(
                     getDeviceName(device.type),

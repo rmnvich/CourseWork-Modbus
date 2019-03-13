@@ -12,7 +12,6 @@ import rmnvich.apps.coursework.modbus.App
 import rmnvich.apps.coursework.modbus.R
 import rmnvich.apps.coursework.modbus.databinding.FragmentSearchInformationBinding
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
-import timber.log.Timber
 import javax.inject.Inject
 
 class SensorInformationFragment : Fragment(), SensorInformationContract.View {

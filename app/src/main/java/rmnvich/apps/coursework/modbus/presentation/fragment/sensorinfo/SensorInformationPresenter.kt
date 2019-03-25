@@ -11,14 +11,11 @@ class SensorInformationPresenter(
         SensorInformationContract.Presenter {
 
     override fun viewIsReady() {
-        view?.showProgress()
         compositeDisposable.add(
                 interactor.searchSensor()
                         .subscribe({
-                            view?.hideProgress()
                             view?.displaySensorInfo(it)
                         }, {
-                            view?.hideProgress()
                             view?.showErrorMessage(it.message!!)
                         })
         )

@@ -9,8 +9,6 @@ interface SensorInformationContract {
     interface View : MvpView {
 
         fun displaySensorInfo(sensor: Sensor)
-
-        fun showErrorMessage(message: String)
     }
 
     interface Presenter : MvpPresenter<View>

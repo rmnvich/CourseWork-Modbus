@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:Placeholder="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="sensor"
@@ -17,21 +20,23 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/sensor_information_cardview_horizontal_margin"
+            android:layout_marginTop="@dimen/sensor_information_cardview_vertical_margin"
             android:layout_marginEnd="@dimen/sensor_information_cardview_horizontal_margin"
             app:cardBackgroundColor="@color/colorForeground"
             app:cardCornerRadius="@dimen/sensor_information_cardview_corner_radius"
             app:contentPadding="@dimen/sensor_information_cardview_padding">
 
             <LinearLayout
+                android:id="@+id/layout_sensor_info"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
                     android:text='@{@string/name + ": " + sensor.sensorName}'
@@ -43,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/tv_manufacturer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
                     android:text='@{@string/manufacturer + ": " + sensor.sensorManufacturer}'
@@ -55,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/tv_version"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
                     android:text='@{@string/version + ": " + sensor.sensorVersion}'
@@ -67,7 +72,7 @@
 
                 <TextView
                     android:id="@+id/tv_indications"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text='@{@string/indications + ": " + sensor.sensorIndications}'
                     android:textColor="@color/colorWhite"
@@ -76,13 +81,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/colorAccent" />
         </android.support.v7.widget.CardView>
     </FrameLayout>
 </layout>

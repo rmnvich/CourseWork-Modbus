@@ -5,10 +5,7 @@ import rmnvich.apps.coursework.modbus.presentation.mvp.MvpView
 
 interface SensorWriteAddressContract {
 
-    interface View : MvpView {
-
-        fun showErrorMessage(message: String)
-    }
+    interface View : MvpView
 
     interface Presenter : MvpPresenter<View>
 }

@@ -18,7 +18,7 @@ class SensorWriteAddressFragment : Fragment(), SensorWriteAddressContract.View {
     @Inject
     lateinit var mPresenter: SensorWriteAddressPresenter
 
-    lateinit var mBinding: FragmentWriteAddressBinding
+    private lateinit var mBinding: FragmentWriteAddressBinding
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -40,16 +40,8 @@ class SensorWriteAddressFragment : Fragment(), SensorWriteAddressContract.View {
         mPresenter.viewIsReady()
     }
 
-    override fun showProgress() {
-        mBinding.progressBar.visibility = View.VISIBLE
-    }
-
     override fun showErrorMessage(message: String) {
         Snackbar.make(mBinding.root, message, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun hideProgress() {
-        mBinding.progressBar.visibility = View.INVISIBLE
     }
 
     override fun onDetach() {

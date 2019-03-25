@@ -1,6 +1,7 @@
 package rmnvich.apps.coursework.modbus.domain.interactor.sensorinfo
 
 import io.reactivex.Flowable
+import rmnvich.apps.coursework.modbus.data.common.Constants.DEFAULT_DELAY
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
 import rmnvich.apps.coursework.modbus.domain.utils.SchedulersProvider
@@ -14,7 +15,7 @@ class SensorInformationInteractor(
     fun searchSensor(): Flowable<Sensor> {
         return sensorRepository.searchSensor()
                 .subscribeOn(schedulersProvider.io())
-                .delay(1000, TimeUnit.MILLISECONDS)
+                .delay(DEFAULT_DELAY, TimeUnit.MILLISECONDS)
                 .observeOn(schedulersProvider.ui())
     }
 }

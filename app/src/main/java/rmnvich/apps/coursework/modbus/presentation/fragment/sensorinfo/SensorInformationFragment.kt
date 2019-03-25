@@ -21,12 +21,6 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
 
     lateinit var mBinding: FragmentSearchInformationBinding
 
-    companion object {
-        fun newInstance(): SensorInformationFragment {
-            return SensorInformationFragment()
-        }
-    }
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         App.instance.componentHolder

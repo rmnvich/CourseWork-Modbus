@@ -19,7 +19,7 @@ class SensorInformationPresenter(
                             view?.displaySensorInfo(it)
                         }, {
                             view?.hideProgress()
-                            view?.showErrorMessage("An error occured")
+                            view?.showErrorMessage(it.message!!)
                         })
         )
     }

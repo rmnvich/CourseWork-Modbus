@@ -12,9 +12,9 @@ import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
 import java.util.*
 
 class SensorRepositoryImpl(
-    private val applicationContext: Context,
-    private val sensorFactory: SensorFactory,
-    private val deviceManager: D2xxManager
+        private val applicationContext: Context,
+        private val sensorFactory: SensorFactory,
+        private val deviceManager: D2xxManager
 ) : SensorRepository {
 
     //TODO: комманда идентификации: 0x00, 0x43, 0x14, 0x01, 0x00
@@ -31,15 +31,15 @@ class SensorRepositoryImpl(
             deviceManager.getDeviceInfoList(devicesCount, deviceList)
 
             device = deviceManager.openBySerialNumber(
-                applicationContext,
-                deviceList[0]?.serialNumber
+                    applicationContext,
+                    deviceList[0]?.serialNumber
             )
             device.setBitMode(0.toByte(), D2xxManager.FT_BITMODE_RESET)
             device.setBaudRate(9600)
             device.setDataCharacteristics(
-                D2xxManager.FT_DATA_BITS_8,
-                D2xxManager.FT_STOP_BITS_1,
-                D2xxManager.FT_PARITY_NONE
+                    D2xxManager.FT_DATA_BITS_8,
+                    D2xxManager.FT_STOP_BITS_1,
+                    D2xxManager.FT_PARITY_NONE
             )
             device.latencyTimer = 5.toByte()
             device.setRts()
@@ -52,8 +52,8 @@ class SensorRepositoryImpl(
                 val currentTime = calendar.timeInMillis
 
                 val request = byteArrayOf(
-                    0x00, 0x03, 0x00, 0x00,
-                    0x00, 0x04, 0x45, 0xD8.toByte()
+                        0x00, 0x03, 0x00, 0x00,
+                        0x00, 0x04, 0x45, 0xD8.toByte()
                 )
 
                 // Identification (not working)
@@ -76,19 +76,17 @@ class SensorRepositoryImpl(
                         string.append(response[i]).append(" ")
 
                     sensorWithInfo = Sensor(
-                        "",
-                        "$string\n\n$count",
-                        "",
-                        0,
-                        0
+                            "No data",
+                            "No data",
+                            "No data",
+                            "$string"
                     )
                 } else {
                     sensorWithInfo = Sensor(
-                        "",
-                        "Timeout",
-                        "",
-                        0,
-                        0
+                            "No data",
+                            "No data",
+                            "No data",
+                            "Timeout"
                     )
                 }
                 emitter.onNext(sensorWithInfo)

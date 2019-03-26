@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,6 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
     lateinit var mPresenter: SensorInformationPresenter
 
     private lateinit var mBinding: FragmentSearchInformationBinding
-
-    private lateinit var mPlaceholder: FiftyShadesOf
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -43,17 +42,25 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
         super.onViewCreated(view, savedInstanceState)
         mPresenter.attachView(this)
         mPresenter.viewIsReady()
-
-        mPlaceholder = FiftyShadesOf.with(context)
-                .on(R.id.layout_sensor_info)
-                .start()
     }
 
     override fun displaySensorInfo(sensor: Sensor) {
         mBinding.sensor = sensor
         mBinding.invalidateAll()
+    }
 
-        mPlaceholder.stop()
+    override fun hidePlaceholders() {
+        setTextViewsColor(ContextCompat.getColor(context!!, R.color.colorWhite))
+        mBinding.placeholderGroup.finishAnimation()
+    }
+
+    override fun setTextViewsColor(color: Int) {
+        Handler().postDelayed({
+            mBinding.tvName.setTextColor(color)
+            mBinding.tvManufacturer.setTextColor(color)
+            mBinding.tvVersion.setTextColor(color)
+            mBinding.tvIndications.setTextColor(color)
+        }, 500)
     }
 
     override fun showErrorMessage(message: String) {

@@ -9,6 +9,10 @@ interface SensorInformationContract {
     interface View : MvpView {
 
         fun displaySensorInfo(sensor: Sensor)
+
+        fun hidePlaceholders()
+
+        fun setTextViewsColor(color: Int)
     }
 
     interface Presenter : MvpPresenter<View>

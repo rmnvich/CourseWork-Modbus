@@ -9,5 +9,8 @@
     <color name="colorBackground">#353535</color>
     <color name="colorForeground">#171717</color>
 
+    <color name="colorPlaceholderNormal">#232323</color>
+    <color name="colorPlaceholderHighlight">#888888</color>
+
     <color name="colorWhite">#FFFFFF</color>
 </resources>

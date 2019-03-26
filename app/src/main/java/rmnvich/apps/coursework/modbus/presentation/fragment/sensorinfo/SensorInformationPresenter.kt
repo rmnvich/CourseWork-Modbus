@@ -15,6 +15,7 @@ class SensorInformationPresenter(
                 interactor.searchSensor()
                         .subscribe({
                             view?.displaySensorInfo(it)
+                            view?.hidePlaceholders()
                         }, {
                             view?.showErrorMessage(it.message!!)
                         })

@@ -6,6 +6,8 @@ import com.rmnvich.roomtest.app.dagger.PerApplication
 import dagger.Module
 import dagger.Provides
 import rmnvich.apps.coursework.modbus.data.repository.SensorRepositoryImpl
+import rmnvich.apps.coursework.modbus.data.utils.ControlSumCalculator
+import rmnvich.apps.coursework.modbus.data.utils.RegistersParser
 import rmnvich.apps.coursework.modbus.data.utils.SensorFactory
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
 
@@ -16,9 +18,15 @@ class AppModule(private val applicationContext: Context) {
     @Provides
     fun provideSensorRepository(
         sensorFactory: SensorFactory,
-        deviceManager: D2xxManager
+        deviceManager: D2xxManager,
+        controlSumCalculator: ControlSumCalculator,
+        registersParser: RegistersParser
     ): SensorRepository {
-        return SensorRepositoryImpl(applicationContext, sensorFactory, deviceManager)
+        return SensorRepositoryImpl(
+            applicationContext, sensorFactory,
+            deviceManager, controlSumCalculator,
+            registersParser
+        )
     }
 
     @PerApplication
@@ -31,5 +39,17 @@ class AppModule(private val applicationContext: Context) {
     @Provides
     fun provideDeviceManager(): D2xxManager {
         return D2xxManager.getInstance(applicationContext)
+    }
+
+    @PerApplication
+    @Provides
+    fun provideControlSumCalculator(): ControlSumCalculator {
+        return ControlSumCalculator()
+    }
+
+    @PerApplication
+    @Provides
+    fun provideRegistersParser(): RegistersParser {
+        return RegistersParser()
     }
 }

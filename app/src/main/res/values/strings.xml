@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">CourseWork</string>
 
-    <string name="name">Name</string>
-    <string name="manufacturer">Manufacturer</string>
-    <string name="version">Version</string>
-    <string name="indications">Indications</string>
+    <string name="name">Sensor name</string>
+    <string name="manufacturer">Sensor manufacturer</string>
+    <string name="version">Sensor version</string>
+    <string name="indications">Sensor indications</string>
 
     <string name="information">Information</string>
     <string name="addresses">Addresses</string>

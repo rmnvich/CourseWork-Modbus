@@ -4,9 +4,9 @@ import rmnvich.apps.coursework.modbus.domain.entity.base.ISensor
 
 class SensorTemperature : ISensor {
 
-    override fun getRegisters(): ByteArray {
+    override fun getRegisters(deviceAddressByte: Byte): ByteArray {
         return byteArrayOf(
-            0x00, 0x03, 0x00, 0x00,
+            deviceAddressByte, 0x03, 0x00, 0x00,
             0x00, 0x04, 0x45, 0xD8.toByte()
         )
     }

@@ -1,10 +1,28 @@
 package rmnvich.apps.coursework.modbus.data.utils
 
+import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
+import java.nio.charset.Charset
+
 class RegistersParser {
 
     fun parseTemperature(byteArray: ByteArray): String {
 
         return ""
+    }
+
+    // TODO: fix it!
+    fun parseSensorIdentificationData(response: ByteArray): Sensor {
+        val sensor = Sensor()
+
+        val sensorManufacturer = response.copyOfRange(10, 16).toString(Charset.defaultCharset())
+        val sensorName = response.copyOfRange(18, 24).toString(Charset.defaultCharset())
+        val sensorVersion = response.copyOfRange(26, 30).toString(Charset.defaultCharset())
+
+        sensor.sensorManufacturer = sensorManufacturer
+        sensor.sensorName = sensorName
+        sensor.sensorVersion = sensorVersion
+
+        return sensor
     }
 
     /*

@@ -1,27 +1,24 @@
 package rmnvich.apps.coursework.modbus.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.ftdi.j2xx.D2xxManager
 import com.ftdi.j2xx.FT_Device
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import rmnvich.apps.coursework.modbus.data.utils.CRC16Calcer
 import rmnvich.apps.coursework.modbus.data.utils.SensorFactory
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
+import java.nio.charset.Charset
 import java.util.*
 
 class SensorRepositoryImpl(
-        private val applicationContext: Context,
-        private val sensorFactory: SensorFactory,
-        private val deviceManager: D2xxManager
+    private val applicationContext: Context,
+    private val sensorFactory: SensorFactory,
+    private val deviceManager: D2xxManager
 ) : SensorRepository {
-
-    //TODO: комманда идентификации: 0x00, 0x43, 0x14, 0x01, 0x00
-
-    //TODO: получаем имя датчика, фирму и версию, и исходя из фабрики шлём конкретные регистры
-
-    //TODO: выводить имя датчика, фирму, версию и показания
 
     override fun searchSensor(): Flowable<Sensor> {
         var device: FT_Device
@@ -31,15 +28,15 @@ class SensorRepositoryImpl(
             deviceManager.getDeviceInfoList(devicesCount, deviceList)
 
             device = deviceManager.openBySerialNumber(
-                    applicationContext,
-                    deviceList[0]?.serialNumber
+                applicationContext,
+                deviceList[0]?.serialNumber
             )
             device.setBitMode(0.toByte(), D2xxManager.FT_BITMODE_RESET)
             device.setBaudRate(9600)
             device.setDataCharacteristics(
-                    D2xxManager.FT_DATA_BITS_8,
-                    D2xxManager.FT_STOP_BITS_1,
-                    D2xxManager.FT_PARITY_NONE
+                D2xxManager.FT_DATA_BITS_8,
+                D2xxManager.FT_STOP_BITS_1,
+                D2xxManager.FT_PARITY_NONE
             )
             device.latencyTimer = 5.toByte()
             device.setRts()
@@ -51,22 +48,60 @@ class SensorRepositoryImpl(
             while (true) {
                 val currentTime = calendar.timeInMillis
 
+                /**
+                 * Ответ: 1 3 4 0 1 0 3 -21 -14
+                 * 1 - Адрес устройства
+                 * 3 - Код комманды
+                 * 4 - Сколько байт в ответе
+                 * 0 - Старший байт адреса (не нужен)
+                 * 1 - Младший байт адреса (первый байт для всех запросов)
+                 * 0 - Старший байт типа датчика (не нужен)
+                 * 3 - Тип датчика
+                 * Контрольная сумма
+                 */
+
+                /**
+                 * Послать запрос на чтение первых двух регистров, чтобы получить первый байт для всех последующих запросов
+                 * (чтобы знать адрес датчика с которым буду общаться)
+                 *
+                 * Далее послать запрос на идентификацию с этим первым байтом
+                 *
+                 * Преобразовать ответ в текст
+                 *
+                 * Из фабрики вытащить нужный датчик
+                 *
+                 * Сделать запрос с его регистрами
+                 *
+                 * Получить показания в байтах, преобразовать в текст
+                 */
+
+                //TODO: Запрос на чтение первых двух регистров
                 val request = byteArrayOf(
-                        0x00, 0x03, 0x00, 0x00,
-                        0x00, 0x04, 0x45, 0xD8.toByte()
+                    0x00, 0x03, 0x00, 0x00,
+                    0x00, 0x02, 0x00, 0x00
                 )
 
-                // Identification (not working)
+                //TODO: Запрос идентификации
 //                val request = byteArrayOf(
-//                    0x00, 0x2B, 0x0E,
-//                    0x01, 0x00
+//                    0x01, 0x2B, 0x0E,
+//                    0x01, 0x00, 0x00, 0x00
 //                )
+
+
+                // Расчёт контрольной суммы
+                val crcCalcer = CRC16Calcer()
+                val controlSum = crcCalcer.CalcCRC(request, 0, request.size - 2)
+
+                request[request.size - 2] = controlSum.and(0xff).toByte()
+                request[request.size - 1] = (controlSum / 256).and(0xff).toByte()
 
                 device.purge(D2xxManager.FT_PURGE_RX)
                 device.write(request)
 
                 Thread.sleep(50)
                 val countOfResponse = device.queueStatus
+
+                val str = byteArrayOf(0x53, 0x63, 0x68)
 
                 var sensorWithInfo: Sensor
                 if (countOfResponse > 0) {
@@ -76,17 +111,17 @@ class SensorRepositoryImpl(
                         string.append(response[i]).append(" ")
 
                     sensorWithInfo = Sensor(
-                            "No data",
-                            "No data",
-                            "No data",
-                            "$string"
+                        "$controlSum",
+                        "No data" + str.toString(Charset.defaultCharset()),
+                        "No data" + 0x53.toChar() + 0x63.toChar() + 0x68.toChar(),
+                        "$string"
                     )
                 } else {
                     sensorWithInfo = Sensor(
-                            "No data",
-                            "No data",
-                            "No data",
-                            "Timeout"
+                        "$controlSum",
+                        "No data",
+                        "No data",
+                        "Timeout"
                     )
                 }
                 emitter.onNext(sensorWithInfo)

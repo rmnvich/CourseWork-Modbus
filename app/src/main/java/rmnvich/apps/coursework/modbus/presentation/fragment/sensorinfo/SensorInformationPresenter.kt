@@ -67,9 +67,4 @@ class SensorInformationPresenter(
                 }, { Timber.e(it) })
         )
     }
-
-    override fun detachView() {
-        super.detachView()
-        compositeDisposable.clear()
-    }
 }

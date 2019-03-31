@@ -17,4 +17,9 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.container, SensorViewPagerFragment.newInstance())
                 .commit()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        System.exit(0)
+    }
 }

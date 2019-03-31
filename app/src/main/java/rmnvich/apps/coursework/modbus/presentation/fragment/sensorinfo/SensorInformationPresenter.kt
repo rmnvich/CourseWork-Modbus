@@ -2,14 +2,13 @@ package rmnvich.apps.coursework.modbus.presentation.fragment.sensorinfo
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.USB_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.UsbManager
 import io.reactivex.disposables.CompositeDisposable
 import rmnvich.apps.coursework.modbus.domain.interactor.sensorinfo.SensorInformationInteractor
 import rmnvich.apps.coursework.modbus.presentation.mvp.PresenterBase
-import android.content.Context.USB_SERVICE
-import android.util.Log
 import timber.log.Timber
 
 
@@ -22,17 +21,17 @@ class SensorInformationPresenter(
     private var isPlaceholderHidden = false
 
     override fun viewIsReady() {
-        registerBroadcastRecevier()
+        registerBroadcastReceiver()
 
         val isDeviceConnected = checkIfDeviceConnected()
         if (isDeviceConnected) {
-            view?.setDeviceAttachingStatus(true, isDefaultValue = true)
-        } else view?.setDeviceAttachingStatus(false, isDefaultValue = true)
+            view?.setDeviceConnectionStatus(true, isDefaultValue = true)
+        } else view?.setDeviceConnectionStatus(false, isDefaultValue = true)
 
         startReadingSensor()
     }
 
-    private fun registerBroadcastRecevier() {
+    private fun registerBroadcastReceiver() {
         val intentFilter = IntentFilter()
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
@@ -42,9 +41,9 @@ class SensorInformationPresenter(
                     override fun onReceive(context: Context?, intent: Intent?) {
                         if (intent?.action == UsbManager.ACTION_USB_DEVICE_ATTACHED) {
                             startReadingSensor()
-                            view?.setDeviceAttachingStatus(true, isDefaultValue = false)
+                            view?.setDeviceConnectionStatus(true, isDefaultValue = false)
                         } else if (intent?.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
-                            view?.setDeviceAttachingStatus(false, isDefaultValue = false)
+                            view?.setDeviceConnectionStatus(false, isDefaultValue = false)
                         }
                     }
                 }, intentFilter)

@@ -64,18 +64,17 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
         }, 500)
     }
 
-    override fun setDeviceAttachingStatus(isAttached: Boolean, isDefaultValue: Boolean) {
-        if (isAttached) {
+    override fun setDeviceConnectionStatus(isAttached: Boolean, isDefaultValue: Boolean) {
+        val color = if (isAttached) {
             mBinding.tvDeviceStatus.text = getString(R.string.device_attached)
-
-            if (!isDefaultValue)
-                setTextViewsColor(ContextCompat.getColor(context!!, R.color.colorWhite))
+            ContextCompat.getColor(context!!, R.color.colorWhite)
         } else {
             mBinding.tvDeviceStatus.text = getString(R.string.device_detached)
-
-            if (!isDefaultValue)
-                setTextViewsColor(ContextCompat.getColor(context!!, R.color.colorWhiteAlpha))
+            ContextCompat.getColor(context!!, R.color.colorWhiteAlpha)
         }
+
+        if (!isDefaultValue)
+            setTextViewsColor(color)
     }
 
     override fun showErrorMessage(message: String) {

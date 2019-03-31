@@ -14,7 +14,7 @@ interface SensorInformationContract {
 
         fun setTextViewsColor(color: Int)
 
-        fun setDeviceAttachingStatus(isAttached: Boolean, isDefaultValue: Boolean)
+        fun setDeviceConnectionStatus(isAttached: Boolean, isDefaultValue: Boolean)
     }
 
     interface Presenter : MvpPresenter<View> {

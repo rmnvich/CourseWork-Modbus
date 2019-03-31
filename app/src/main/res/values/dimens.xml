@@ -8,5 +8,6 @@
     <dimen name="sensor_information_cardview_padding">15dp</dimen>
     <dimen name="sensor_information_tv_margin_top">4dp</dimen>
     <dimen name="sensor_information_tv_margin_bottom">8dp</dimen>
+    <dimen name="sensor_information_tv_header_margin_top">5dp</dimen>
     <dimen name="sensor_information_tv_size">17sp</dimen>
 </resources>

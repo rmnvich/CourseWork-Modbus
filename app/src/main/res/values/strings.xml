@@ -11,5 +11,7 @@
 
     <string name="device_attached">Device is connected</string>
     <string name="device_detached">Device not connected</string>
+    <string name="device_connection_status">Device connection status:</string>
+    <string name="sensor_information">Sensor information:</string>
 
 </resources>

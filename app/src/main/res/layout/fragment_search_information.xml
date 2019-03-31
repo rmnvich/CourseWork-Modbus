@@ -29,103 +29,118 @@
             app:cardCornerRadius="@dimen/sensor_information_cardview_corner_radius"
             app:contentPadding="@dimen/sensor_information_cardview_padding">
 
-            <io.rmiri.placeholder.PlaceholderGroup
-                android:id="@+id/placeholder_group"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                Placeholder:PH_BackgroundViewsColor="@color/colorPlaceholderNormal"
-                Placeholder:PH_highLightColor="@color/colorPlaceholderHighlight">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/layout_sensor_info"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:text="@string/sensor_information"
+                    android:textColor="@color/colorWhite" />
+
+                <io.rmiri.placeholder.PlaceholderGroup
+                    android:id="@+id/placeholder_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    Placeholder:PH_BackgroundViewsColor="@color/colorPlaceholderNormal"
+                    Placeholder:PH_highLightColor="@color/colorPlaceholderHighlight">
 
-                    <io.rmiri.placeholder.PlaceholderView
+                    <LinearLayout
+                        android:id="@+id/layout_sensor_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
-                        Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
-                        Placeholder:PH_shapeType="rect">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_name"
+                        <io.rmiri.placeholder.PlaceholderView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text='@{@string/name + ": " + sensor.sensorName}'
-                            android:textColor="@color/colorForeground"
-                            android:textSize="@dimen/sensor_information_tv_size"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </io.rmiri.placeholder.PlaceholderView>
+                            android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
+                            Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
+                            Placeholder:PH_shapeType="rect">
 
-                    <io.rmiri.placeholder.PlaceholderView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
-                        Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
-                        Placeholder:PH_shapeType="rect">
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text='@{@string/name + ": " + sensor.sensorName}'
+                                android:textColor="@color/colorForeground"
+                                android:textSize="@dimen/sensor_information_tv_size"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </io.rmiri.placeholder.PlaceholderView>
 
-                        <TextView
-                            android:id="@+id/tv_manufacturer"
+                        <io.rmiri.placeholder.PlaceholderView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text='@{@string/manufacturer + ": " + sensor.sensorManufacturer}'
-                            android:textColor="@color/colorForeground"
-                            android:textSize="@dimen/sensor_information_tv_size"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </io.rmiri.placeholder.PlaceholderView>
+                            android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
+                            Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
+                            Placeholder:PH_shapeType="rect">
 
-                    <io.rmiri.placeholder.PlaceholderView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
-                        Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
-                        Placeholder:PH_shapeType="rect">
+                            <TextView
+                                android:id="@+id/tv_manufacturer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text='@{@string/manufacturer + ": " + sensor.sensorManufacturer}'
+                                android:textColor="@color/colorForeground"
+                                android:textSize="@dimen/sensor_information_tv_size"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </io.rmiri.placeholder.PlaceholderView>
 
-                        <TextView
-                            android:id="@+id/tv_version"
+                        <io.rmiri.placeholder.PlaceholderView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text='@{@string/version + ": " + sensor.sensorVersion}'
-                            android:textColor="@color/colorForeground"
-                            android:textSize="@dimen/sensor_information_tv_size"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </io.rmiri.placeholder.PlaceholderView>
+                            android:layout_marginBottom="@dimen/sensor_information_tv_margin_bottom"
+                            Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
+                            Placeholder:PH_shapeType="rect">
 
-                    <io.rmiri.placeholder.PlaceholderView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
-                        Placeholder:PH_shapeType="rect">
+                            <TextView
+                                android:id="@+id/tv_version"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text='@{@string/version + ": " + sensor.sensorVersion}'
+                                android:textColor="@color/colorForeground"
+                                android:textSize="@dimen/sensor_information_tv_size"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </io.rmiri.placeholder.PlaceholderView>
 
-                        <TextView
-                            android:id="@+id/tv_indications"
+                        <io.rmiri.placeholder.PlaceholderView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text='@{@string/indications + ": " + sensor.sensorIndications}'
-                            android:textColor="@color/colorForeground"
-                            android:textSize="@dimen/sensor_information_tv_size"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </io.rmiri.placeholder.PlaceholderView>
-                </LinearLayout>
-            </io.rmiri.placeholder.PlaceholderGroup>
+                            Placeholder:PH_cornerRadius="@dimen/sensor_information_placeholder_corner_radius"
+                            Placeholder:PH_shapeType="rect">
+
+                            <TextView
+                                android:id="@+id/tv_indications"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text='@{@string/indications + ": " + sensor.sensorIndications}'
+                                android:textColor="@color/colorForeground"
+                                android:textSize="@dimen/sensor_information_tv_size"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </io.rmiri.placeholder.PlaceholderView>
+                    </LinearLayout>
+                </io.rmiri.placeholder.PlaceholderGroup>
+
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -139,17 +154,31 @@
             app:cardCornerRadius="@dimen/sensor_information_cardview_corner_radius"
             app:contentPadding="@dimen/sensor_information_cardview_padding">
 
-            <TextView
-                android:id="@+id/tv_device_status"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sensor_information_tv_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.8"
+                    android:text="@string/device_connection_status"
+                    android:textColor="@color/colorWhite" />
+
+                <TextView
+                    android:id="@+id/tv_device_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sensor_information_tv_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 </layout>

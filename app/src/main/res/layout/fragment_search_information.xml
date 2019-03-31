@@ -12,10 +12,11 @@
             type="rmnvich.apps.coursework.modbus.domain.entity.base.Sensor" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground">
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -52,6 +53,8 @@
                             android:id="@+id/tv_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text='@{@string/name + ": " + sensor.sensorName}'
                             android:textColor="@color/colorForeground"
                             android:textSize="@dimen/sensor_information_tv_size"
@@ -71,6 +74,8 @@
                             android:id="@+id/tv_manufacturer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text='@{@string/manufacturer + ": " + sensor.sensorManufacturer}'
                             android:textColor="@color/colorForeground"
                             android:textSize="@dimen/sensor_information_tv_size"
@@ -90,6 +95,8 @@
                             android:id="@+id/tv_version"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text='@{@string/version + ": " + sensor.sensorVersion}'
                             android:textColor="@color/colorForeground"
                             android:textSize="@dimen/sensor_information_tv_size"
@@ -108,6 +115,8 @@
                             android:id="@+id/tv_indications"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text='@{@string/indications + ": " + sensor.sensorIndications}'
                             android:textColor="@color/colorForeground"
                             android:textSize="@dimen/sensor_information_tv_size"
@@ -118,5 +127,29 @@
                 </LinearLayout>
             </io.rmiri.placeholder.PlaceholderGroup>
         </android.support.v7.widget.CardView>
-    </FrameLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/sensor_information_cardview_horizontal_margin"
+            android:layout_marginTop="@dimen/sensor_information_cardview_device_status_vertical_margin"
+            android:layout_marginEnd="@dimen/sensor_information_cardview_horizontal_margin"
+            app:cardBackgroundColor="@color/colorForeground"
+            app:cardCornerRadius="@dimen/sensor_information_cardview_corner_radius"
+            app:contentPadding="@dimen/sensor_information_cardview_padding">
+
+            <TextView
+                android:id="@+id/tv_device_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sensor_information_tv_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 </layout>

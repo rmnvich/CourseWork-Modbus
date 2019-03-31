@@ -13,4 +13,5 @@
     <color name="colorPlaceholderHighlight">#888888</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhiteAlpha">#80FFFFFF</color>
 </resources>

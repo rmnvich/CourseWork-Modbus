@@ -9,4 +9,7 @@
     <string name="information">Information</string>
     <string name="addresses">Addresses</string>
 
+    <string name="device_attached">Device is connected</string>
+    <string name="device_detached">Device not connected</string>
+
 </resources>

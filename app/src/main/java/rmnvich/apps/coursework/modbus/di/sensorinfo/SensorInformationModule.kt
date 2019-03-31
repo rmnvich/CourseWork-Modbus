@@ -15,10 +15,10 @@ class SensorInformationModule {
     @PerFragment
     @Provides
     fun providePresenter(
-        compositeDisposable: CompositeDisposable,
-        interactor: SensorInformationInteractor
+            compositeDisposable: CompositeDisposable,
+            interactor: SensorInformationInteractor
     ): SensorInformationPresenter {
-        return SensorInformationPresenter(compositeDisposable, interactor)
+        return SensorInformationPresenter(interactor, compositeDisposable)
     }
 
     @PerFragment
@@ -30,8 +30,8 @@ class SensorInformationModule {
     @PerFragment
     @Provides
     fun provideInteractor(
-        schedulersProvider: SchedulersProvider,
-        sensorRepository: SensorRepository
+            schedulersProvider: SchedulersProvider,
+            sensorRepository: SensorRepository
     ): SensorInformationInteractor {
         return SensorInformationInteractor(schedulersProvider, sensorRepository)
     }

@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.florent37.fiftyshadesof.FiftyShadesOf
 import rmnvich.apps.coursework.modbus.App
 import rmnvich.apps.coursework.modbus.R
 import rmnvich.apps.coursework.modbus.databinding.FragmentSearchInformationBinding
@@ -32,9 +31,11 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = DataBindingUtil.inflate(inflater,
+        mBinding = DataBindingUtil.inflate(
+                inflater,
                 R.layout.fragment_search_information,
-                container, false)
+                container, false
+        )
         return mBinding.root
     }
 
@@ -63,12 +64,27 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
         }, 500)
     }
 
+    override fun setDeviceAttachingStatus(isAttached: Boolean, isDefaultValue: Boolean) {
+        if (isAttached) {
+            mBinding.tvDeviceStatus.text = getString(R.string.device_attached)
+
+            if (!isDefaultValue)
+                setTextViewsColor(ContextCompat.getColor(context!!, R.color.colorWhite))
+        } else {
+            mBinding.tvDeviceStatus.text = getString(R.string.device_detached)
+
+            if (!isDefaultValue)
+                setTextViewsColor(ContextCompat.getColor(context!!, R.color.colorWhiteAlpha))
+        }
+    }
+
     override fun showErrorMessage(message: String) {
         Snackbar.make(mBinding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onDetach() {
         super.onDetach()
+        mPresenter.detachView()
         App.instance.componentHolder
                 .releaseSensorInformationComponent()
     }

@@ -5,6 +5,7 @@ import rmnvich.apps.coursework.modbus.data.common.Constants.DEFAULT_DELAY
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
 import rmnvich.apps.coursework.modbus.domain.utils.SchedulersProvider
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class SensorInformationInteractor(

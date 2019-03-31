@@ -10,7 +10,7 @@ class RegistersParser {
         return ""
     }
 
-    // TODO: fix it!
+    // TODO: Fix it!
     fun parseSensorIdentificationData(response: ByteArray): Sensor {
         val sensor = Sensor()
 

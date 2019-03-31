@@ -13,7 +13,14 @@ interface SensorInformationContract {
         fun hidePlaceholders()
 
         fun setTextViewsColor(color: Int)
+
+        fun setDeviceAttachingStatus(isAttached: Boolean, isDefaultValue: Boolean)
     }
 
-    interface Presenter : MvpPresenter<View>
+    interface Presenter : MvpPresenter<View> {
+
+        fun checkIfDeviceConnected(): Boolean
+
+        fun startReadingSensor()
+    }
 }

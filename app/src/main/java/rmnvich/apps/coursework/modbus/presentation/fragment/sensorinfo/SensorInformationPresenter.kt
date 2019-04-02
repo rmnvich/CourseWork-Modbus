@@ -18,15 +18,13 @@ class SensorInformationPresenter(
 ) : PresenterBase<SensorInformationContract.View>(),
         SensorInformationContract.Presenter {
 
-    private var isPlaceholderHidden = false
-
     override fun viewIsReady() {
         registerBroadcastReceiver()
 
         val isDeviceConnected = checkIfDeviceConnected()
         if (isDeviceConnected) {
-            view?.setDeviceConnectionStatus(true, isDefaultValue = true)
-        } else view?.setDeviceConnectionStatus(false, isDefaultValue = true)
+            view?.setDeviceConnectionStatus(true)
+        } else view?.setDeviceConnectionStatus(false)
 
         startReadingSensor()
     }
@@ -41,9 +39,10 @@ class SensorInformationPresenter(
                     override fun onReceive(context: Context?, intent: Intent?) {
                         if (intent?.action == UsbManager.ACTION_USB_DEVICE_ATTACHED) {
                             startReadingSensor()
-                            view?.setDeviceConnectionStatus(true, isDefaultValue = false)
+                            view?.showProgress()
+                            view?.setDeviceConnectionStatus(true)
                         } else if (intent?.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
-                            view?.setDeviceConnectionStatus(false, isDefaultValue = false)
+                            view?.setDeviceConnectionStatus(false)
                         }
                     }
                 }, intentFilter)
@@ -59,11 +58,7 @@ class SensorInformationPresenter(
         compositeDisposable.add(interactor.searchSensor()
                 .subscribe({
                     view?.displaySensorInfo(it)
-
-                    if (!isPlaceholderHidden) {
-                        view?.hidePlaceholders()
-                        isPlaceholderHidden = true
-                    }
+                    view?.hideProgress()
                 }, { Timber.e(it) })
         )
     }

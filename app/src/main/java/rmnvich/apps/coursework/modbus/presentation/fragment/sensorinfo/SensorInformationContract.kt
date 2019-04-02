@@ -10,11 +10,13 @@ interface SensorInformationContract {
 
         fun displaySensorInfo(sensor: Sensor)
 
-        fun hidePlaceholders()
+        fun setTextViewsInformationColor(colors: Array<Int>)
 
-        fun setTextViewsColor(color: Int)
+        fun setDeviceConnectionStatus(isConnected: Boolean)
 
-        fun setDeviceConnectionStatus(isAttached: Boolean, isDefaultValue: Boolean)
+        fun showProgress()
+
+        fun hideProgress()
     }
 
     interface Presenter : MvpPresenter<View> {

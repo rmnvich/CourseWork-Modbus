@@ -1,17 +1,19 @@
 <resources>
     <string name="app_name">CourseWork</string>
 
-    <string name="name">Sensor name</string>
-    <string name="manufacturer">Sensor manufacturer</string>
-    <string name="version">Sensor version</string>
-    <string name="indications">Sensor indications</string>
+    <string name="name">Название</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="version">Версия</string>
+    <string name="indications">Показания</string>
 
-    <string name="information">Information</string>
-    <string name="addresses">Addresses</string>
+    <string name="no_data">Нет данных</string>
 
-    <string name="device_attached">Device is connected</string>
-    <string name="device_detached">Device not connected</string>
-    <string name="device_connection_status">Device connection status:</string>
-    <string name="sensor_information">Sensor information:</string>
+    <string name="information">Информация</string>
+    <string name="addresses">Запись адреса</string>
+
+    <string name="device_attached">Датчик подключен</string>
+    <string name="device_detached">Датчик не подключен</string>
+    <string name="device_connection_status">Статус подключения устройства:</string>
+    <string name="sensor_information">Информация о датчике:</string>
 
 </resources>

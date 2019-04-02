@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="sensor_information_cardview_horizontal_margin">10dp</dimen>
-    <dimen name="sensor_information_cardview_vertical_margin">20dp</dimen>
+    <dimen name="sensor_information_cardview_vertical_margin">10dp</dimen>
     <dimen name="sensor_information_cardview_device_status_vertical_margin">10dp</dimen>
+    <dimen name="sensor_information_cardview_device_status_padding_vertical">10dp</dimen>
+    <dimen name="sensor_information_cardview_device_status_padding_horizontal">15dp</dimen>
     <dimen name="sensor_information_cardview_corner_radius">15dp</dimen>
     <dimen name="sensor_information_placeholder_corner_radius">8dp</dimen>
     <dimen name="sensor_information_cardview_padding">15dp</dimen>
     <dimen name="sensor_information_tv_margin_top">4dp</dimen>
     <dimen name="sensor_information_tv_margin_bottom">8dp</dimen>
     <dimen name="sensor_information_tv_header_margin_top">5dp</dimen>
-    <dimen name="sensor_information_tv_size">17sp</dimen>
+    <dimen name="sensor_information_tv_header_device_status_margin_top">3dp</dimen>
+    <dimen name="sensor_information_tv_size">16sp</dimen>
+    <dimen name="sensor_information_tv_device_status_size">15sp</dimen>
 </resources>

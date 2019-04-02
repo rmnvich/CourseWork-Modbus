@@ -3,7 +3,6 @@ package rmnvich.apps.coursework.modbus.presentation.fragment.sensorinfo
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -36,6 +35,7 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
                 R.layout.fragment_search_information,
                 container, false
         )
+
         return mBinding.root
     }
 
@@ -50,35 +50,38 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
         mBinding.invalidateAll()
     }
 
-    override fun hidePlaceholders() {
-        setTextViewsColor(ContextCompat.getColor(context!!, R.color.colorWhite))
-        mBinding.placeholderGroup.finishAnimation()
+    override fun setTextViewsInformationColor(colors: Array<Int>) {
+        mBinding.tvName.setTextColor(colors[0])
+        mBinding.tvManufacturer.setTextColor(colors[0])
+        mBinding.tvVersion.setTextColor(colors[0])
+        mBinding.tvIndications.setTextColor(colors[0])
+
+        mBinding.tvDeviceStatus.setTextColor(colors[1])
     }
 
-    override fun setTextViewsColor(color: Int) {
-        Handler().postDelayed({
-            mBinding.tvName.setTextColor(color)
-            mBinding.tvManufacturer.setTextColor(color)
-            mBinding.tvVersion.setTextColor(color)
-            mBinding.tvIndications.setTextColor(color)
-        }, 500)
-    }
-
-    override fun setDeviceConnectionStatus(isAttached: Boolean, isDefaultValue: Boolean) {
-        val color = if (isAttached) {
+    override fun setDeviceConnectionStatus(isConnected: Boolean) {
+        val colors = if (isConnected) {
             mBinding.tvDeviceStatus.text = getString(R.string.device_attached)
-            ContextCompat.getColor(context!!, R.color.colorWhite)
+            arrayOf(ContextCompat.getColor(context!!, R.color.colorWhite),
+                    ContextCompat.getColor(context!!, R.color.colorGreen))
         } else {
             mBinding.tvDeviceStatus.text = getString(R.string.device_detached)
-            ContextCompat.getColor(context!!, R.color.colorWhiteAlpha)
+            arrayOf(ContextCompat.getColor(context!!, R.color.colorWhiteAlpha),
+                    ContextCompat.getColor(context!!, R.color.colorRed))
         }
-
-        if (!isDefaultValue)
-            setTextViewsColor(color)
+        setTextViewsInformationColor(colors)
     }
 
     override fun showErrorMessage(message: String) {
         Snackbar.make(mBinding.root, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun showProgress() {
+        mBinding.progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        mBinding.progressBar.visibility = View.INVISIBLE
     }
 
     override fun onDetach() {

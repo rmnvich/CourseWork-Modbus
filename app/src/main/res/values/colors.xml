@@ -8,10 +8,13 @@
 
     <color name="colorBackground">#353535</color>
     <color name="colorForeground">#171717</color>
+    <color name="colorForegroundLight">#232323</color>
 
     <color name="colorPlaceholderNormal">#232323</color>
     <color name="colorPlaceholderHighlight">#888888</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorRed">#EF5350</color>
+    <color name="colorGreen">#66BB6A</color>
     <color name="colorWhiteAlpha">#B3FFFFFF</color>
 </resources>

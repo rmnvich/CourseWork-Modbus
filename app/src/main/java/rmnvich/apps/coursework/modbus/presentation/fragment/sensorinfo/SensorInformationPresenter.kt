@@ -55,7 +55,7 @@ class SensorInformationPresenter(
     }
 
     override fun startReadingSensor() {
-        compositeDisposable.add(interactor.searchSensor()
+        compositeDisposable.add(interactor.readSensorData()
                 .subscribe({
                     view?.displaySensorInfo(it)
                     view?.hideProgress()

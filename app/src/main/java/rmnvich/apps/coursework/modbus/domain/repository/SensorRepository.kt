@@ -6,7 +6,7 @@ import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 
 interface SensorRepository {
 
-    fun searchSensor(): Flowable<Sensor>
+    fun readSensorData(): Flowable<Sensor>
 
     fun writeAddress(): Completable
 }

@@ -24,9 +24,10 @@ class SensorInformationPresenter(
         val isDeviceConnected = checkIfDeviceConnected()
         if (isDeviceConnected) {
             view?.setDeviceConnectionStatus(true)
-        } else view?.setDeviceConnectionStatus(false)
+            view?.showProgress()
 
-        startReadingSensor()
+            startReadingSensor()
+        } else view?.setDeviceConnectionStatus(false)
     }
 
     private fun registerBroadcastReceiver() {

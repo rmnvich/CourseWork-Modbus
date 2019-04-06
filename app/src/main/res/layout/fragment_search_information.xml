@@ -40,7 +40,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text='@{@string/name + ": " + (sensor.sensorName == null ? @string/no_data : sensor.sensorName)}'
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWhiteAlpha"
                 android:textSize="@dimen/sensor_information_tv_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text='@{@string/manufacturer + ": " + (sensor.sensorManufacturer == null ? @string/no_data : sensor.sensorManufacturer)}'
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWhiteAlpha"
                 android:textSize="@dimen/sensor_information_tv_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text='@{@string/version + ": " + (sensor.sensorVersion == null ? @string/no_data : sensor.sensorVersion)}'
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWhiteAlpha"
                 android:textSize="@dimen/sensor_information_tv_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text='@{@string/indications + ": " + (sensor.sensorIndications == null ? @string/no_data : sensor.sensorIndications)}'
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWhiteAlpha"
                 android:textSize="@dimen/sensor_information_tv_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

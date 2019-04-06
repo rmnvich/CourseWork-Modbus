@@ -1,31 +1,37 @@
 package rmnvich.apps.coursework.modbus.data.utils
 
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
+import java.lang.Math.abs
 import java.nio.charset.Charset
 
 class RegistersParser {
 
-    fun parseTemperature(byteArray: ByteArray): String {
-
-        return ""
+    fun parseIndications(response: ByteArray): String {
+        val fractionalValue = formatTemperature(response[9], response[10], response[11], response[12])
+        val temperature = response[7].toDouble() + abs(fractionalValue)
+        return String.format("%.1f", temperature)
     }
 
-    // TODO: Fix it!
     fun parseSensorIdentificationData(response: ByteArray): Sensor {
-        val sensor = Sensor()
+        val sensorData = arrayListOf<String>()
+        val startIndex = 7
 
-        val sensorManufacturer = response.copyOfRange(10, 16).toString(Charset.defaultCharset())
-        val sensorName = response.copyOfRange(18, 24).toString(Charset.defaultCharset())
-        val sensorVersion = response.copyOfRange(26, 30).toString(Charset.defaultCharset())
+        val countOfStrings = response[startIndex]
+        var index = startIndex + 1
 
-        sensor.sensorManufacturer = sensorManufacturer
-        sensor.sensorName = sensorName
-        sensor.sensorVersion = sensorVersion
+        for (i in 0 until countOfStrings) {
+            val stringLength = response[++index]
+            val stringValue = response.copyOfRange(++index, index + stringLength)
+                .toString(Charset.defaultCharset())
 
-        return sensor
+            sensorData.add(stringValue)
+            index += stringLength
+        }
+
+        return Sensor(sensorData[0], sensorData[1], sensorData[2])
     }
 
-    /*
+    //TODO: Fix it
     private fun formatTemperature(loT: Byte, hiT: Byte, nTicksPerGrad: Byte, nTicksLeft: Byte): Double {
         if (hiT.toInt() != 0 && hiT.toInt() != 255) {
             return -255.0
@@ -33,28 +39,31 @@ class RegistersParser {
         if (loT.toInt() == 255 && hiT.toInt() == 255 && nTicksLeft.toInt() == 255)
             return -255.0
 
-        val temp: Int = loT.toInt()
+        var temp: Int = loT.toInt()
         if (hiT.toInt() != 0) {
             if (temp >= 128)
-                temp |= 0xffffff00
+                temp = temp or 0xffffff00.toInt()
         } else {
             if (temp == 255) {
-                temp |= 0xffffff00
+                temp = temp or 0xffffff00.toInt()
             }
         }
-        val fTemp: Float = temp / 2.0f
-        temp >>= 1
+        val fTemp = temp / 2.0f
+        temp /= 2
 
-        val fRes = (temp.toDouble()) - 0.25 + (nTicksPerGrad.toInt() - nTicksLeft.toInt()).toDouble() / nTicksPerGrad.toDouble()
-        if (fabs(fRes - fTemp) > 0.5) {
+        var fRes = (temp.toDouble()) - 0.25 + (nTicksPerGrad.toInt() -
+                nTicksLeft.toInt()).toDouble() / nTicksPerGrad.toDouble()
+
+        if (abs(fRes - fTemp) > 0.5) {
             if (fRes < fTemp)
                 fRes += 1
             else fRes -= 1
         }
+
         if (fRes > 100 || fRes < -100) {
             return -255.0
         }
+
         return fRes
     }
-    */
 }

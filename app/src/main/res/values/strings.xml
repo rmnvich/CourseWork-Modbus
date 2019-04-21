@@ -4,6 +4,8 @@
     <string name="name">Название</string>
     <string name="manufacturer">Производитель</string>
     <string name="version">Версия</string>
+    <string name="network_address">Адрес сети</string>
+    <string name="serial_number">Серийный номер</string>
     <string name="indications">Показания</string>
 
     <string name="no_data">Нет данных</string>
@@ -16,4 +18,6 @@
     <string name="device_connection_status">Статус подключения устройства:</string>
     <string name="sensor_information">Информация о датчике:</string>
 
+
+    <string name="sensor_indications_error">Ошибка</string>
 </resources>

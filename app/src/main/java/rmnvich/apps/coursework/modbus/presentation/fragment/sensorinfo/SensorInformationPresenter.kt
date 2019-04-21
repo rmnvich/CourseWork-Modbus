@@ -13,10 +13,10 @@ import timber.log.Timber
 
 
 class SensorInformationPresenter(
-        private val interactor: SensorInformationInteractor,
-        private val compositeDisposable: CompositeDisposable
+    private val interactor: SensorInformationInteractor,
+    private val compositeDisposable: CompositeDisposable
 ) : PresenterBase<SensorInformationContract.View>(),
-        SensorInformationContract.Presenter {
+    SensorInformationContract.Presenter {
 
     override fun viewIsReady() {
         registerBroadcastReceiver()
@@ -36,31 +36,33 @@ class SensorInformationPresenter(
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
 
         (view as SensorInformationFragment).activity
-                ?.registerReceiver(object : BroadcastReceiver() {
-                    override fun onReceive(context: Context?, intent: Intent?) {
-                        if (intent?.action == UsbManager.ACTION_USB_DEVICE_ATTACHED) {
-                            startReadingSensor()
-                            view?.showProgress()
-                            view?.setDeviceConnectionStatus(true)
-                        } else if (intent?.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
-                            view?.setDeviceConnectionStatus(false)
-                        }
+            ?.registerReceiver(object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    if (intent?.action == UsbManager.ACTION_USB_DEVICE_ATTACHED) {
+                        startReadingSensor()
+                        view?.showProgress()
+                        view?.setDeviceConnectionStatus(true)
+                    } else if (intent?.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
+                        view?.setDeviceConnectionStatus(false)
                     }
-                }, intentFilter)
+                }
+            }, intentFilter)
     }
 
     override fun checkIfDeviceConnected(): Boolean {
         val usbManager = (view as SensorInformationFragment).activity
-                ?.application?.getSystemService(USB_SERVICE) as UsbManager
+            ?.application?.getSystemService(USB_SERVICE) as UsbManager
         return usbManager.deviceList.isNotEmpty()
     }
 
     override fun startReadingSensor() {
-        compositeDisposable.add(interactor.readSensorData()
+        compositeDisposable.add(
+            interactor.readSensorData()
                 .subscribe({
                     view?.displaySensorInfo(it)
                     view?.hideProgress()
-                }, { Timber.e(it) })
+                }, { view?.hideProgress() },
+                    { view?.hideProgress() })
         )
     }
 }

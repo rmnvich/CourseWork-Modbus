@@ -54,6 +54,8 @@ class SensorInformationFragment : Fragment(), SensorInformationContract.View {
         mBinding.tvName.setTextColor(colors[0])
         mBinding.tvManufacturer.setTextColor(colors[0])
         mBinding.tvVersion.setTextColor(colors[0])
+        mBinding.tvNetworkAddress.setTextColor(colors[0])
+        mBinding.tvSerialNumber.setTextColor(colors[0])
         mBinding.tvIndications.setTextColor(colors[0])
 
         mBinding.tvDeviceStatus.setTextColor(colors[1])

@@ -1,15 +1,20 @@
 package rmnvich.apps.coursework.modbus.data.utils
 
+import rmnvich.apps.coursework.modbus.data.utils.Constants.SENSOR_INDICATIONS_ERROR
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
-import java.lang.Math.abs
 import java.nio.charset.Charset
 
 class RegistersParser {
 
     fun parseIndications(response: ByteArray): String {
-        val fractionalValue = formatTemperature(response[9], response[10], response[11], response[12])
-        val temperature = response[7].toDouble() + abs(fractionalValue)
-        return String.format("%.1f", temperature)
+        val errorCode = response[0]
+
+        return if (errorCode.toInt() == 0) {
+            val beforeDot = response[7].toDouble()
+            val afterDot = response[8].toDouble() / 256.0
+
+            String.format("%.1f", beforeDot + afterDot)
+        } else SENSOR_INDICATIONS_ERROR
     }
 
     fun parseSensorIdentificationData(response: ByteArray): Sensor {
@@ -29,41 +34,5 @@ class RegistersParser {
         }
 
         return Sensor(sensorData[0], sensorData[1], sensorData[2])
-    }
-
-    //TODO: Fix it
-    private fun formatTemperature(loT: Byte, hiT: Byte, nTicksPerGrad: Byte, nTicksLeft: Byte): Double {
-        if (hiT.toInt() != 0 && hiT.toInt() != 255) {
-            return -255.0
-        }
-        if (loT.toInt() == 255 && hiT.toInt() == 255 && nTicksLeft.toInt() == 255)
-            return -255.0
-
-        var temp: Int = loT.toInt()
-        if (hiT.toInt() != 0) {
-            if (temp >= 128)
-                temp = temp or 0xffffff00.toInt()
-        } else {
-            if (temp == 255) {
-                temp = temp or 0xffffff00.toInt()
-            }
-        }
-        val fTemp = temp / 2.0f
-        temp /= 2
-
-        var fRes = (temp.toDouble()) - 0.25 + (nTicksPerGrad.toInt() -
-                nTicksLeft.toInt()).toDouble() / nTicksPerGrad.toDouble()
-
-        if (abs(fRes - fTemp) > 0.5) {
-            if (fRes < fTemp)
-                fRes += 1
-            else fRes -= 1
-        }
-
-        if (fRes > 100 || fRes < -100) {
-            return -255.0
-        }
-
-        return fRes
     }
 }

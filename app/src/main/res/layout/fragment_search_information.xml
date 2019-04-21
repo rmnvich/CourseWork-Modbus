@@ -41,10 +41,7 @@
                 android:maxLines="1"
                 android:text='@{@string/name + ": " + (sensor.sensorName == null ? @string/no_data : sensor.sensorName)}'
                 android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/sensor_information_tv_size" />
 
             <TextView
                 android:id="@+id/tv_manufacturer"
@@ -55,10 +52,7 @@
                 android:maxLines="1"
                 android:text='@{@string/manufacturer + ": " + (sensor.sensorManufacturer == null ? @string/no_data : sensor.sensorManufacturer)}'
                 android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/sensor_information_tv_size" />
 
             <TextView
                 android:id="@+id/tv_version"
@@ -69,10 +63,29 @@
                 android:maxLines="1"
                 android:text='@{@string/version + ": " + (sensor.sensorVersion == null ? @string/no_data : sensor.sensorVersion)}'
                 android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/sensor_information_tv_size" />
+
+            <TextView
+                android:id="@+id/tv_network_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text='@{@string/network_address + ": " + (sensor.sensorNetworkAddress == null ? @string/no_data : sensor.sensorNetworkAddress)}'
+                android:textColor="@color/colorWhiteAlpha"
+                android:textSize="@dimen/sensor_information_tv_size" />
+
+            <TextView
+                android:id="@+id/tv_serial_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text='@{@string/serial_number + ": " + (sensor.sensorSerialNumber == null ? @string/no_data : sensor.sensorSerialNumber)}'
+                android:textColor="@color/colorWhiteAlpha"
+                android:textSize="@dimen/sensor_information_tv_size" />
 
             <TextView
                 android:id="@+id/tv_indications"
@@ -83,10 +96,7 @@
                 android:maxLines="1"
                 android:text='@{@string/indications + ": " + (sensor.sensorIndications == null ? @string/no_data : sensor.sensorIndications)}'
                 android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/sensor_information_tv_size" />
         </LinearLayout>
 
         <ProgressBar
@@ -127,10 +137,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sensor_information_tv_device_status_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/sensor_information_tv_device_status_size" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

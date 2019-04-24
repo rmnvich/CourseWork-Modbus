@@ -5,7 +5,6 @@ open class Sensor(
         var sensorManufacturer: String,
         var sensorVersion: String
 ) {
-
     var sensorSerialNumber: String? = null
     var sensorNetworkAddress: String? = null
     var sensorIndications: Any = Any()

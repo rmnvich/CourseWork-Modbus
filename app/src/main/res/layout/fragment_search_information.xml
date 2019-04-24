@@ -16,88 +16,95 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackground">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorForeground"
-            android:orientation="vertical"
-            android:padding="@dimen/sensor_information_cardview_padding"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/colorForeground"
+            app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sensor_information"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:id="@+id/tv_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text='@{@string/name + ": " + (sensor.sensorName == null ? @string/no_data : sensor.sensorName)}'
-                android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size" />
+                android:orientation="vertical"
+                android:padding="@dimen/sensor_information_cardview_padding">
 
-            <TextView
-                android:id="@+id/tv_manufacturer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text='@{@string/manufacturer + ": " + (sensor.sensorManufacturer == null ? @string/no_data : sensor.sensorManufacturer)}'
-                android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensor_information"
+                    android:textColor="@color/colorWhite" />
 
-            <TextView
-                android:id="@+id/tv_version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text='@{@string/version + ": " + (sensor.sensorVersion == null ? @string/no_data : sensor.sensorVersion)}'
-                android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size" />
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{@string/name + ": " + (sensor.sensorName == null ? @string/no_data : sensor.sensorName)}'
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textSize="@dimen/sensor_information_tv_size" />
 
-            <TextView
-                android:id="@+id/tv_network_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text='@{@string/network_address + ": " + (sensor.sensorNetworkAddress == null ? @string/no_data : sensor.sensorNetworkAddress)}'
-                android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size" />
+                <TextView
+                    android:id="@+id/tv_manufacturer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{@string/manufacturer + ": " + (sensor.sensorManufacturer == null ? @string/no_data : sensor.sensorManufacturer)}'
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textSize="@dimen/sensor_information_tv_size" />
 
-            <TextView
-                android:id="@+id/tv_serial_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text='@{@string/serial_number + ": " + (sensor.sensorSerialNumber == null ? @string/no_data : sensor.sensorSerialNumber)}'
-                android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size" />
+                <TextView
+                    android:id="@+id/tv_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{@string/version + ": " + (sensor.sensorVersion == null ? @string/no_data : sensor.sensorVersion)}'
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textSize="@dimen/sensor_information_tv_size" />
 
-            <TextView
-                android:id="@+id/tv_indications"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text='@{@string/indications + ": " + (sensor.sensorIndications == null ? @string/no_data : sensor.sensorIndications)}'
-                android:textColor="@color/colorWhiteAlpha"
-                android:textSize="@dimen/sensor_information_tv_size" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_network_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{@string/network_address + ": " + (sensor.sensorNetworkAddress == null ? @string/no_data : sensor.sensorNetworkAddress)}'
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textSize="@dimen/sensor_information_tv_size" />
+
+                <TextView
+                    android:id="@+id/tv_serial_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{@string/serial_number + ": " + (sensor.sensorSerialNumber == null ? @string/no_data : sensor.sensorSerialNumber)}'
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textSize="@dimen/sensor_information_tv_size" />
+
+                <TextView
+                    android:id="@+id/tv_indications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sensor_information_tv_header_margin_top"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text='@{@string/indications + ": " + (sensor.sensorIndications == null ? @string/no_data : sensor.sensorIndications)}'
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textSize="@dimen/sensor_information_tv_size" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <ProgressBar
             android:id="@+id/progress_bar"

@@ -13,38 +13,34 @@ import rmnvich.apps.coursework.modbus.data.utils.RegistersParser
 import rmnvich.apps.coursework.modbus.data.utils.SensorFactory
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
+import java.nio.charset.Charset
 import java.util.*
 
 class SensorRepositoryImpl(
-        private val applicationContext: Context,
-        private val sensorFactory: SensorFactory,
-        private val deviceManager: D2xxManager,
-        private val controlSumCalculator: ControlSumCalculator,
-        private val registersParser: RegistersParser
+    private val applicationContext: Context,
+    private val sensorFactory: SensorFactory,
+    private val deviceManager: D2xxManager,
+    private val controlSumCalculator: ControlSumCalculator,
+    private val registersParser: RegistersParser
 ) : SensorRepository {
 
     private lateinit var device: FT_Device
 
     private val searchDeviceRequest = byteArrayOf(
-            0x00, 0x03, 0x00, 0x00,
-            0x00, 0x02, 0x00, 0x00
+        0x00, 0x03, 0x00, 0x00,
+        0x00, 0x02, 0x00, 0x00
     )
 
     private var identificationRequest = byteArrayOf(
-            0x00, 0x2B, 0x0E, 0x01,
-            0x00, 0x00, 0x00
+        0x00, 0x2B, 0x0E, 0x01,
+        0x00, 0x00, 0x00
     )
 
-    // serialNumber (6 (версия прошивки), 7, 8 register in identification)
+    // serialNumber (7, 8 register in identification)
 
     override fun readSensorData(): Flowable<Sensor> {
         return Flowable.create({ emitter ->
             searchDevice()
-
-            /**
-             * Послать запрос идентификации ещё раз, только вместо первого региста 0x00 слать 0x07 и 0x08 ?
-             * Сделать обратно первый регистр 0x00
-             */
 
             // Getting first byte for next requests
             val deviceAddressByte = sendRequest(searchDeviceRequest)[4]
@@ -59,7 +55,12 @@ class SensorRepositoryImpl(
 
             // Create necessary sensor by sensor name
             val iSensorWithRegisters = sensorFactory.createSensorBySensorName(sensor.sensorName)
-            val indicationsRequest = iSensorWithRegisters.getRegisters(deviceAddressByte)
+            val indicationsRequest = iSensorWithRegisters.getRegistersForIndications(deviceAddressByte)
+
+            val serialNumberRequest = iSensorWithRegisters.getRegistersForSerialNumber(deviceAddressByte)
+            val serialNumberResponse = sendRequest(serialNumberRequest)
+
+            sensor.sensorSerialNumber = registersParser.parseSensorSerialNumber(serialNumberResponse)
 
             // Getting sensor indications, parsing and emitting their
             while (true) {
@@ -83,8 +84,8 @@ class SensorRepositoryImpl(
 
             // Calculating control sum
             val controlSum = controlSumCalculator.calculateControlSum(
-                    request, 0,
-                    request.size - 2
+                request, 0,
+                request.size - 2
             )
 
             // Adding control sum to two latest bytes of request
@@ -123,8 +124,8 @@ class SensorRepositoryImpl(
 
             if (devicesCount > 0) {
                 device = deviceManager.openBySerialNumber(
-                        applicationContext,
-                        deviceList[0]?.serialNumber
+                    applicationContext,
+                    deviceList[0]?.serialNumber
                 )
                 settingDevice()
 
@@ -137,9 +138,9 @@ class SensorRepositoryImpl(
         device.setBitMode(0.toByte(), D2xxManager.FT_BITMODE_RESET)
         device.setBaudRate(9600)
         device.setDataCharacteristics(
-                D2xxManager.FT_DATA_BITS_8,
-                D2xxManager.FT_STOP_BITS_1,
-                D2xxManager.FT_PARITY_NONE
+            D2xxManager.FT_DATA_BITS_8,
+            D2xxManager.FT_STOP_BITS_1,
+            D2xxManager.FT_PARITY_NONE
         )
         device.latencyTimer = 5.toByte()
         device.setRts()

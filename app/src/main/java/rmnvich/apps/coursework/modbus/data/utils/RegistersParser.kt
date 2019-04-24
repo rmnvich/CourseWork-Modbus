@@ -2,12 +2,13 @@ package rmnvich.apps.coursework.modbus.data.utils
 
 import rmnvich.apps.coursework.modbus.data.utils.Constants.SENSOR_INDICATIONS_ERROR
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
+import java.lang.StringBuilder
 import java.nio.charset.Charset
 
 class RegistersParser {
 
     fun parseIndications(response: ByteArray): String {
-        val errorCode = response[0]
+        val errorCode = response[5]
 
         return if (errorCode.toInt() == 0) {
             val beforeDot = response[7].toDouble()
@@ -34,5 +35,9 @@ class RegistersParser {
         }
 
         return Sensor(sensorData[0], sensorData[1], sensorData[2])
+    }
+
+    fun parseSensorSerialNumber(response: ByteArray): String {
+        return ((response[4] * 256 * 256) + (response[5] * 256) + (response[6])).toString()
     }
 }

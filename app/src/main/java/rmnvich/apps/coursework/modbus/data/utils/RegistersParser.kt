@@ -12,7 +12,10 @@ class RegistersParser {
 
         return if (errorCode.toInt() == 0) {
             val beforeDot = response[7].toDouble()
-            val afterDot = 1 - abs(response[8].toDouble() / 256.0)
+            var afterDot = response[8].toDouble() / 256.0
+
+            if (afterDot < 0)
+                afterDot = 1 - abs(afterDot)
 
             String.format("%.1f", beforeDot + afterDot)
         } else SENSOR_INDICATIONS_ERROR

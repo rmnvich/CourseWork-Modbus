@@ -26,6 +26,20 @@ class SensorRepositoryImpl(
 
     private lateinit var device: FT_Device
 
+    /**
+     * 1 байт - Сетевой адрес
+     * 2 байт - Код комманды (0х06)
+     * 3, 4 байт - номер регистра (0х00, 0х00)
+     * 5 байт - 0х00
+     * 6 байт - Что пишем (какой адрес)
+     * 7, 8 байты - Контрольная сумма
+     */
+
+    private val writeAddress = byteArrayOf(
+        0x00, 0x06, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00
+    )
+
     private val searchDeviceRequest = byteArrayOf(
         0x00, 0x03, 0x00, 0x00,
         0x00, 0x02, 0x00, 0x00

@@ -10,10 +10,9 @@ import rmnvich.apps.coursework.modbus.R
 import rmnvich.apps.coursework.modbus.data.utils.Constants.SENSOR_INDICATIONS_ERROR
 import rmnvich.apps.coursework.modbus.data.utils.ControlSumCalculator
 import rmnvich.apps.coursework.modbus.data.utils.RegistersParser
-import rmnvich.apps.coursework.modbus.data.utils.SensorFactory
+import rmnvich.apps.coursework.modbus.data.factory.SensorFactory
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
-import java.nio.charset.Charset
 import java.util.*
 
 class SensorRepositoryImpl(
@@ -26,20 +25,6 @@ class SensorRepositoryImpl(
 
     private lateinit var device: FT_Device
 
-    /**
-     * 1 байт - Сетевой адрес
-     * 2 байт - Код комманды (0х06)
-     * 3, 4 байт - номер регистра (0х00, 0х00)
-     * 5 байт - 0х00
-     * 6 байт - Что пишем (какой адрес)
-     * 7, 8 байты - Контрольная сумма
-     */
-
-    private val writeAddress = byteArrayOf(
-        0x00, 0x06, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00
-    )
-
     private val searchDeviceRequest = byteArrayOf(
         0x00, 0x03, 0x00, 0x00,
         0x00, 0x02, 0x00, 0x00
@@ -49,8 +34,6 @@ class SensorRepositoryImpl(
         0x00, 0x2B, 0x0E, 0x01,
         0x00, 0x00, 0x00
     )
-
-    // serialNumber (7, 8 register in identification)
 
     override fun readSensorData(): Flowable<Sensor> {
         return Flowable.create({ emitter ->

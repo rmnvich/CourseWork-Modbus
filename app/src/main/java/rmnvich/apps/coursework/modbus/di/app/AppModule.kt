@@ -8,7 +8,7 @@ import dagger.Provides
 import rmnvich.apps.coursework.modbus.data.repository.SensorRepositoryImpl
 import rmnvich.apps.coursework.modbus.data.utils.ControlSumCalculator
 import rmnvich.apps.coursework.modbus.data.utils.RegistersParser
-import rmnvich.apps.coursework.modbus.data.utils.SensorFactory
+import rmnvich.apps.coursework.modbus.data.factory.SensorFactory
 import rmnvich.apps.coursework.modbus.domain.repository.SensorRepository
 
 @Module

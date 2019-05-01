@@ -10,7 +10,7 @@
 
     <string name="no_data">Нет данных</string>
 
-    <string name="information">Информация</string>
+    <string name="information">Технический контроль</string>
     <string name="addresses">Запись адреса</string>
 
     <string name="device_attached">Датчик подключен</string>

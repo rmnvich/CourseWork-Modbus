@@ -2,8 +2,8 @@ package rmnvich.apps.coursework.modbus.data.utils
 
 import rmnvich.apps.coursework.modbus.data.utils.Constants.SENSOR_INDICATIONS_ERROR
 import rmnvich.apps.coursework.modbus.domain.entity.base.Sensor
-import java.lang.StringBuilder
 import java.nio.charset.Charset
+import kotlin.math.abs
 
 class RegistersParser {
 
@@ -12,7 +12,7 @@ class RegistersParser {
 
         return if (errorCode.toInt() == 0) {
             val beforeDot = response[7].toDouble()
-            val afterDot = response[8].toDouble() / 256.0
+            val afterDot = 1 - abs(response[8].toDouble() / 256.0)
 
             String.format("%.1f", beforeDot + afterDot)
         } else SENSOR_INDICATIONS_ERROR

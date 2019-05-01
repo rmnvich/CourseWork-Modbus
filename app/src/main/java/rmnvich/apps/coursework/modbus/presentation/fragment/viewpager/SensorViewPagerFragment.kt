@@ -33,7 +33,7 @@ class SensorViewPagerFragment : Fragment() {
         mAdapter = FragmentPagerItemAdapter(
                 childFragmentManager, FragmentPagerItems.with(context)
                 .add(R.string.information, SensorInformationFragment::class.java)
-                .add(R.string.addresses, SensorWriteAddressFragment::class.java)
+//                .add(R.string.addresses, SensorWriteAddressFragment::class.java)
                 .create()
         )
 
